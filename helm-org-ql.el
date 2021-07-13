@@ -89,6 +89,11 @@ Based on `helm-map'.")
   :type '(alist :key-type (string :tag "Description")
                 :value-type (function :tag "Command")))
 
+(defcustom helm-org-ql-headline-title-only 't
+"Show only headline title in helm completion.
+If 'nil show tags as well."
+:type 'number)
+
 ;;;; Commands
 
 ;;;###autoload
@@ -207,7 +212,7 @@ WINDOW-WIDTH should be the width of the Helm window."
   ;; call a setup function in a buffer before running queries.
   (let* ((prefix (concat (buffer-name) ":"))
          (width (- window-width (length prefix)))
-         (heading (org-get-heading t))
+         (heading (org-get-heading helm-org-ql-headline-title-only))
          (path (-> (org-get-outline-path)
                  (org-format-outline-path width nil "")
                  (org-split-string "")))
